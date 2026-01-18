@@ -19,9 +19,7 @@ export function AuthLayout({ children }: AuthLayoutProps) {
           {children}
         </div>
         <div className="text-center text-sm text-muted-foreground mt-6 space-y-1">
-          <p className="font-semibold text-foreground/80">Dikembangkan Oleh:</p>
-          <p>Fazha Lintang Utami</p>
-          <p>NIM 21802241010</p>
+          <p className="font-medium text-foreground/90">Fazha Lintang Utami | NIM 21802241010</p>
           <p>S1-Pendidikan Administrasi Perkantoran</p>
         </div>
       </div>
