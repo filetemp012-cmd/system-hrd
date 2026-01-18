@@ -29,11 +29,11 @@ export default function Login() {
     if (activeRole === 'bos') {
       // Boss login
       if (username === 'bos' && password === 'bos123') {
-        login({ 
-          id: 'bos-1', 
-          username: 'bos', 
-          nama: 'Direktur Utama', 
-          role: 'bos' as any 
+        login({
+          id: 'bos-1',
+          username: 'bos',
+          nama: 'Direktur Utama',
+          role: 'bos' as any
         });
         navigate('/bos/dashboard');
         toast({
@@ -87,7 +87,7 @@ export default function Login() {
             </TabsTrigger>
             <TabsTrigger value="bos" className="flex items-center gap-2">
               <Briefcase className="h-4 w-4" />
-              Bos
+              Pimpinan
             </TabsTrigger>
           </TabsList>
         </Tabs>
@@ -134,7 +134,7 @@ export default function Login() {
           ) : (
             <span className="flex items-center gap-2">
               <LogIn className="h-4 w-4" />
-              Masuk sebagai {activeRole === 'bos' ? 'Bos' : 'Pegawai'}
+              Masuk sebagai {activeRole === 'bos' ? 'Pimpinan' : 'Pegawai'}
             </span>
           )}
         </Button>
@@ -143,7 +143,7 @@ export default function Login() {
           <p className="text-xs font-medium text-muted-foreground mb-2">Demo Akun:</p>
           <div className="space-y-1 text-xs text-muted-foreground">
             <p><strong>Pegawai:</strong> andi.pegawai / pegawai123</p>
-            <p><strong>Bos:</strong> bos / bos123</p>
+            <p><strong>Pimpinan:</strong> bos / bos123</p>
           </div>
         </div>
       </form>
