@@ -28,10 +28,10 @@ export default function Login() {
 
     if (activeRole === 'bos') {
       // Boss login
-      if (username === 'bos' && password === 'bos123') {
+      if (username === 'putri.pimpinan' && password === 'pimpinan123') {
         login({
           id: 'bos-1',
-          username: 'bos',
+          username: 'putri.pimpinan',
           nama: 'Direktur Utama',
           role: 'bos' as any
         });
@@ -143,7 +143,7 @@ export default function Login() {
           <p className="text-xs font-medium text-muted-foreground mb-2">Demo Akun:</p>
           <div className="space-y-1 text-xs text-muted-foreground">
             <p><strong>Pegawai:</strong> andi.pegawai / pegawai123</p>
-            <p><strong>Pimpinan:</strong> bos / bos123</p>
+            <p><strong>Pimpinan:</strong> putri.pimpinan / pimpinan123</p>
           </div>
         </div>
       </form>
