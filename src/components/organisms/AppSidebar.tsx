@@ -76,8 +76,29 @@ export function AppSidebar({ role = 'pegawai' }: AppSidebarProps) {
         </SidebarGroup>
       </SidebarContent>
 
-      <SidebarFooter className="p-4 border-t border-sidebar-border">
-        <p className="text-xs text-sidebar-foreground/50 text-center">
+      <SidebarFooter className="p-4 border-t border-sidebar-border gap-4">
+        <div className="flex items-center justify-center gap-3">
+          <div className="w-12 h-12 bg-white rounded-lg p-1.5 flex items-center justify-center shadow-sm">
+            <img src="/logo-uny.png" alt="UNY" className="w-full h-full object-contain" />
+          </div>
+          <div className="h-12 w-auto bg-white rounded-lg p-1.5 flex items-center justify-center shadow-sm px-2">
+            <img src="/logo-fe.png" alt="FE" className="h-full w-auto object-contain" />
+          </div>
+        </div>
+
+        <div className="space-y-3 text-center">
+          <div className="space-y-0.5">
+            <p className="text-[10px] uppercase tracking-wider text-sidebar-foreground/60 font-medium">Pengembang</p>
+            <p className="text-xs font-semibold text-sidebar-foreground">Fazha Lintang Utami</p>
+          </div>
+
+          <div className="space-y-0.5">
+            <p className="text-[10px] uppercase tracking-wider text-sidebar-foreground/60 font-medium">Dosen Pembimbing</p>
+            <p className="text-xs font-semibold text-sidebar-foreground">Muslikhah Dwihartanti,<br />S.I.P., M.Pd</p>
+          </div>
+        </div>
+
+        <p className="text-[10px] text-sidebar-foreground/40 text-center pt-2 border-t border-sidebar-border/50">
           © 2024 System Pegawai v1.0
         </p>
       </SidebarFooter>
