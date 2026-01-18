@@ -40,12 +40,12 @@ export function AppSidebar({ role = 'pegawai' }: AppSidebarProps) {
     <Sidebar className="border-r-0">
       <SidebarHeader className="p-4 border-b border-sidebar-border">
         <div className="flex items-center gap-3">
-          <div className="w-10 h-10 rounded-lg bg-sidebar-primary flex items-center justify-center">
-            <Building2 className="h-6 w-6 text-sidebar-primary-foreground" />
+          <div className="w-10 h-10 rounded-lg overflow-hidden shrink-0">
+            <img src="/logo.jpg" alt="Logo" className="w-full h-full object-cover" />
           </div>
-          <div>
-            <h1 className="font-bold text-sidebar-foreground text-lg">SisAdmin</h1>
-            <p className="text-xs text-sidebar-foreground/70">Sistem Administrasi</p>
+          <div className="overflow-hidden">
+            <h1 className="font-bold text-sidebar-foreground text-sm leading-tight text-wrap">System Administrasi</h1>
+            <p className="text-xs text-sidebar-foreground/70">Pegawai</p>
           </div>
         </div>
       </SidebarHeader>
@@ -78,9 +78,9 @@ export function AppSidebar({ role = 'pegawai' }: AppSidebarProps) {
 
       <SidebarFooter className="p-4 border-t border-sidebar-border">
         <p className="text-xs text-sidebar-foreground/50 text-center">
-          © 2024 SisAdmin v1.0
+          © 2024 System Pegawai v1.0
         </p>
       </SidebarFooter>
-    </Sidebar>
+    </Sidebar >
   );
 }
