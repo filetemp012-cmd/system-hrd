@@ -60,7 +60,7 @@ export default function DashboardBos() {
   const [filterStatus, setFilterStatus] = useState<string>('all');
 
   // Fixed division list
-  const ALL_DIVISI = ['Bisnis', 'Pemasaran', 'HR', 'IT', 'Lapangan'];
+  const ALL_DIVISI = ['Administrasi', 'Keuangan', 'HR', 'Operasional', 'Pemasaran', 'IT', 'Riset & Pengembangan', 'Humas', 'Hukum'];
 
   // Use fixed list for filtering
   const divisiList = ALL_DIVISI;

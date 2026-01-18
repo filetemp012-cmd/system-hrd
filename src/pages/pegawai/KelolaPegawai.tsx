@@ -476,11 +476,15 @@ export default function KelolaPegawai() {
                           <SelectValue placeholder="Pilih Divisi" />
                         </SelectTrigger>
                         <SelectContent>
-                          <SelectItem value="Bisnis">Bisnis</SelectItem>
-                          <SelectItem value="Pemasaran">Pemasaran</SelectItem>
+                          <SelectItem value="Administrasi">Administrasi</SelectItem>
+                          <SelectItem value="Keuangan">Keuangan</SelectItem>
                           <SelectItem value="HR">HR</SelectItem>
+                          <SelectItem value="Operasional">Operasional</SelectItem>
+                          <SelectItem value="Pemasaran">Pemasaran</SelectItem>
                           <SelectItem value="IT">IT</SelectItem>
-                          <SelectItem value="Lapangan">Lapangan</SelectItem>
+                          <SelectItem value="Riset & Pengembangan">Riset & Pengembangan</SelectItem>
+                          <SelectItem value="Humas">Humas</SelectItem>
+                          <SelectItem value="Hukum">Hukum</SelectItem>
                         </SelectContent>
                       </Select>
                     </div>

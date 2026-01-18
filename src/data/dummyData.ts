@@ -35,7 +35,7 @@ export const dataPegawai: Pegawai[] = [
     nama: 'Andi Pratama',
     role: 'pegawai',
     jabatan: 'Staff IT',
-    divisi: 'Teknologi Informasi',
+    divisi: 'IT',
     nip: 'NIP-2020-001',
     tanggalMasuk: '2020-03-15',
     status: 'aktif',
@@ -57,7 +57,7 @@ export const dataPegawai: Pegawai[] = [
     nama: 'Citra Dewi',
     role: 'pegawai',
     jabatan: 'HRD',
-    divisi: 'Sumber Daya Manusia',
+    divisi: 'HR',
     nip: 'NIP-2021-003',
     tanggalMasuk: '2021-01-10',
     status: 'aktif',
@@ -101,7 +101,7 @@ export const dataPegawai: Pegawai[] = [
     nama: 'Gilang Ramadhan',
     role: 'pegawai',
     jabatan: 'Developer',
-    divisi: 'Teknologi Informasi',
+    divisi: 'IT',
     nip: 'NIP-2023-001',
     tanggalMasuk: '2023-02-01',
     status: 'aktif',
@@ -367,10 +367,10 @@ export const getSummaryGuru = (): {
   const totalSiswa = 8; // Fixed for now
   const sudahMengumpulkan = dataPengumpulan.length;
   const belumDinilai = dataPengumpulan.filter(p => p.nilai === undefined).length;
-  
+
   const nilaiList = dataPengumpulan.filter(p => p.nilai !== undefined).map(p => p.nilai as number);
-  const rataRataNilai = nilaiList.length > 0 
-    ? Math.round(nilaiList.reduce((a, b) => a + b, 0) / nilaiList.length) 
+  const rataRataNilai = nilaiList.length > 0
+    ? Math.round(nilaiList.reduce((a, b) => a + b, 0) / nilaiList.length)
     : 0;
 
   return { totalTugas, totalSiswa, sudahMengumpulkan, belumDinilai, rataRataNilai };
