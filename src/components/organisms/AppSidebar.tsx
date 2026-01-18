@@ -99,7 +99,7 @@ export function AppSidebar({ role = 'pegawai' }: AppSidebarProps) {
         </div>
 
         <p className="text-[10px] text-sidebar-foreground/40 text-center pt-2 border-t border-sidebar-border/50">
-          © 2024 System Pegawai v1.0
+          © 2026 System Administrasi Pegawai v1.0
         </p>
       </SidebarFooter>
     </Sidebar >
