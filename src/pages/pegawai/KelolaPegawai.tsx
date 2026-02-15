@@ -125,10 +125,10 @@ export default function KelolaPegawai() {
   const handleSavePegawai = (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (!formData.jabatan || !formData.divisi || !formData.status || !formData.gaji) {
+    if (!formData.jabatan || !formData.status || !formData.gaji) {
       toast({
         title: "Validasi Gagal",
-        description: "Mohon lengkapi semua data wajib (Jabatan, Divisi, Status, Gaji)",
+        description: "Mohon lengkapi semua data wajib (Jabatan, Status, Gaji)",
         variant: "destructive"
       });
       return;
@@ -474,62 +474,42 @@ export default function KelolaPegawai() {
                           <SelectValue placeholder="Pilih Jabatan" />
                         </SelectTrigger>
                         <SelectContent>
-                          <SelectItem value="Pengawas">Pengawas</SelectItem>
-                          <SelectItem value="Kepala">Kepala</SelectItem>
-                          <SelectItem value="Pegawai">Pegawai</SelectItem>
+                          <SelectItem value="Struktural">Struktural</SelectItem>
+                          <SelectItem value="Fungsional">Fungsional</SelectItem>
+                          <SelectItem value="Pelaksana">Pelaksana</SelectItem>
+                          <SelectItem value="Pendidik">Pendidik</SelectItem>
+                          <SelectItem value="Tenaga Kependidikan">Tenaga Kependidikan</SelectItem>
                         </SelectContent>
                       </Select>
                     </div>
+
                     <div className="space-y-2">
-                      <Label htmlFor="divisi">Divisi</Label>
+                      <Label htmlFor="tanggalMasuk">Tanggal Masuk</Label>
+                      <Input
+                        id="tanggalMasuk"
+                        type="date"
+                        value={formData.tanggalMasuk}
+                        onChange={handleInputChange}
+                        required
+                      />
+                    </div>
+                    <div className="space-y-2">
+                      <Label htmlFor="status">Status</Label>
                       <Select
-                        value={formData.divisi}
-                        onValueChange={(val) => setFormData(prev => ({ ...prev, divisi: val }))}
+                        value={formData.status}
+                        onValueChange={(val) => setFormData(prev => ({ ...prev, status: val }))}
                         required
                       >
                         <SelectTrigger>
-                          <SelectValue placeholder="Pilih Divisi" />
+                          <SelectValue placeholder="Pilih Status" />
                         </SelectTrigger>
                         <SelectContent>
-                          <SelectItem value="Administrasi">Administrasi</SelectItem>
-                          <SelectItem value="Keuangan">Keuangan</SelectItem>
-                          <SelectItem value="HR">HR</SelectItem>
-                          <SelectItem value="Operasional">Operasional</SelectItem>
-                          <SelectItem value="Pemasaran">Pemasaran</SelectItem>
-                          <SelectItem value="IT">IT</SelectItem>
-                          <SelectItem value="Riset & Pengembangan">Riset & Pengembangan</SelectItem>
-                          <SelectItem value="Humas">Humas</SelectItem>
-                          <SelectItem value="Hukum">Hukum</SelectItem>
+                          <SelectItem value="aktif">Aktif</SelectItem>
+                          <SelectItem value="cuti">Cuti</SelectItem>
+                          <SelectItem value="tidak-aktif">Tidak Aktif</SelectItem>
                         </SelectContent>
                       </Select>
                     </div>
-                  </div>
-                  <div className="space-y-2">
-                    <Label htmlFor="tanggalMasuk">Tanggal Masuk</Label>
-                    <Input
-                      id="tanggalMasuk"
-                      type="date"
-                      value={formData.tanggalMasuk}
-                      onChange={handleInputChange}
-                      required
-                    />
-                  </div>
-                  <div className="space-y-2">
-                    <Label htmlFor="status">Status</Label>
-                    <Select
-                      value={formData.status}
-                      onValueChange={(val) => setFormData(prev => ({ ...prev, status: val }))}
-                      required
-                    >
-                      <SelectTrigger>
-                        <SelectValue placeholder="Pilih Status" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="aktif">Aktif</SelectItem>
-                        <SelectItem value="cuti">Cuti</SelectItem>
-                        <SelectItem value="tidak-aktif">Tidak Aktif</SelectItem>
-                      </SelectContent>
-                    </Select>
                   </div>
                   <div className="flex justify-end gap-2 pt-4">
                     <Button type="button" variant="outline" onClick={() => setIsAddPegawaiOpen(false)}>
