@@ -604,7 +604,10 @@ export default function KelolaPegawai() {
                   <TableHead>NIP</TableHead>
                   <TableHead>Nama</TableHead>
                   <TableHead>Jabatan</TableHead>
-                  <TableHead>Divisi</TableHead>
+                  <TableHead>Golongan</TableHead>
+                  <TableHead>Kategori</TableHead>
+                  <TableHead>Mulai Tugas</TableHead>
+                  <TableHead>Purna Tugas</TableHead>
                   <TableHead>Status</TableHead>
                   <TableHead>Gaji</TableHead>
                   <TableHead className="text-right">Aksi</TableHead>
@@ -616,7 +619,10 @@ export default function KelolaPegawai() {
                     <TableCell className="font-mono text-sm">{pegawai.nip}</TableCell>
                     <TableCell className="font-medium">{pegawai.nama}</TableCell>
                     <TableCell>{pegawai.jabatan}</TableCell>
-                    <TableCell>{pegawai.divisi}</TableCell>
+                    <TableCell>{pegawai.golongan}</TableCell>
+                    <TableCell>{pegawai.kategori}</TableCell>
+                    <TableCell>{pegawai.tanggalMulaiTugas}</TableCell>
+                    <TableCell>{pegawai.tanggalPurnaTugas || '-'}</TableCell>
                     <TableCell>
                       <StatusBadge
                         status={
