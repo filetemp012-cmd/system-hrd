@@ -49,7 +49,8 @@ export default function KelolaPegawai() {
     jabatan: '',
     divisi: '',
     tanggalMasuk: '',
-    status: 'aktif'
+    status: 'aktif',
+    gaji: ''
   };
   const [formData, setFormData] = useState(initialFormState);
 
@@ -101,7 +102,8 @@ export default function KelolaPegawai() {
       jabatan: pegawai.jabatan,
       divisi: pegawai.divisi,
       tanggalMasuk: pegawai.tanggalMasuk,
-      status: pegawai.status || 'aktif'
+      status: pegawai.status || 'aktif',
+      gaji: pegawai.gaji ? pegawai.gaji.toString() : ''
     });
     setCurrentId(pegawai.id);
     setIsEditing(true);
@@ -123,10 +125,10 @@ export default function KelolaPegawai() {
   const handleSavePegawai = (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (!formData.jabatan || !formData.divisi || !formData.status) {
+    if (!formData.jabatan || !formData.divisi || !formData.status || !formData.gaji) {
       toast({
         title: "Validasi Gagal",
-        description: "Mohon lengkapi semua data wajib (Jabatan, Divisi, Status)",
+        description: "Mohon lengkapi semua data wajib (Jabatan, Divisi, Status, Gaji)",
         variant: "destructive"
       });
       return;
@@ -139,6 +141,7 @@ export default function KelolaPegawai() {
           ? {
             ...p,
             ...formData,
+            gaji: parseInt(formData.gaji) || 0,
             // Keep other fields that are not in form
           }
           : p
@@ -155,6 +158,7 @@ export default function KelolaPegawai() {
         username: formData.nama.toLowerCase().replace(/\s+/g, '.') + '.pegawai',
         role: 'pegawai',
         ...formData,
+        gaji: parseInt(formData.gaji) || 0,
         status: formData.status as 'aktif' | 'cuti' | 'tidak-aktif' // Type assertion
       };
 
@@ -447,6 +451,17 @@ export default function KelolaPegawai() {
                       required
                     />
                   </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="gaji">Gaji (IDR)</Label>
+                    <Input
+                      id="gaji"
+                      type="number"
+                      value={formData.gaji}
+                      onChange={handleInputChange}
+                      placeholder="Masukkan nominal gaji"
+                      required
+                    />
+                  </div>
                   <div className="grid grid-cols-2 gap-4">
                     <div className="space-y-2">
                       <Label htmlFor="jabatan">Jabatan</Label>
@@ -536,6 +551,7 @@ export default function KelolaPegawai() {
                   <TableHead>Jabatan</TableHead>
                   <TableHead>Divisi</TableHead>
                   <TableHead>Status</TableHead>
+                  <TableHead>Gaji</TableHead>
                   <TableHead className="text-right">Aksi</TableHead>
                 </TableRow>
               </TableHeader>
@@ -557,6 +573,9 @@ export default function KelolaPegawai() {
                             pegawai.status === 'cuti' ? 'Cuti' : 'Tidak Aktif'
                         }
                       />
+                    </TableCell>
+                    <TableCell>
+                      {new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR' }).format(pegawai.gaji || 0)}
                     </TableCell>
                     <TableCell className="text-right">
                       <div className="flex justify-end gap-1">

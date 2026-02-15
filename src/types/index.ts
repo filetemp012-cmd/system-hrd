@@ -46,6 +46,7 @@ export interface Pegawai extends User {
   nip: string;
   tanggalMasuk: string;
   status: 'aktif' | 'cuti' | 'tidak-aktif';
+  gaji: number;
 }
 
 export interface DokumenPegawai {

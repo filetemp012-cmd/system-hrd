@@ -39,6 +39,7 @@ export const dataPegawai: Pegawai[] = [
     nip: 'NIP-2020-001',
     tanggalMasuk: '2020-03-15',
     status: 'aktif',
+    gaji: 5000000,
   },
   {
     id: 'pegawai-2',
@@ -50,6 +51,7 @@ export const dataPegawai: Pegawai[] = [
     nip: 'NIP-2019-015',
     tanggalMasuk: '2019-07-01',
     status: 'aktif',
+    gaji: 4500000,
   },
   {
     id: 'pegawai-3',
@@ -61,6 +63,7 @@ export const dataPegawai: Pegawai[] = [
     nip: 'NIP-2021-003',
     tanggalMasuk: '2021-01-10',
     status: 'aktif',
+    gaji: 5500000,
   },
   {
     id: 'pegawai-4',
@@ -72,6 +75,7 @@ export const dataPegawai: Pegawai[] = [
     nip: 'NIP-2022-008',
     tanggalMasuk: '2022-05-20',
     status: 'cuti',
+    gaji: 4800000,
   },
   {
     id: 'pegawai-5',
@@ -83,6 +87,7 @@ export const dataPegawai: Pegawai[] = [
     nip: 'NIP-2018-002',
     tanggalMasuk: '2018-09-01',
     status: 'aktif',
+    gaji: 7000000,
   },
   {
     id: 'pegawai-6',
@@ -94,6 +99,7 @@ export const dataPegawai: Pegawai[] = [
     nip: 'NIP-2020-012',
     tanggalMasuk: '2020-11-15',
     status: 'aktif',
+    gaji: 6000000,
   },
   {
     id: 'pegawai-7',
@@ -105,6 +111,7 @@ export const dataPegawai: Pegawai[] = [
     nip: 'NIP-2023-001',
     tanggalMasuk: '2023-02-01',
     status: 'aktif',
+    gaji: 8000000,
   },
   {
     id: 'pegawai-8',
@@ -116,6 +123,7 @@ export const dataPegawai: Pegawai[] = [
     nip: 'NIP-2019-020',
     tanggalMasuk: '2019-04-10',
     status: 'tidak-aktif',
+    gaji: 4000000,
   },
 ];
 
