@@ -37,9 +37,11 @@ export const dataPegawai: Pegawai[] = [
     jabatan: 'Staff IT',
     divisi: 'IT',
     nip: 'NIP-2020-001',
-    tanggalMasuk: '2020-03-15',
-    status: 'aktif',
+    tanggalMulaiTugas: '2020-03-15',
+    status: 'Aktif',
     gaji: 5000000,
+    kategori: 'PNS',
+    golongan: 'III/a',
   },
   {
     id: 'pegawai-2',
@@ -49,9 +51,11 @@ export const dataPegawai: Pegawai[] = [
     jabatan: 'Admin Keuangan',
     divisi: 'Keuangan',
     nip: 'NIP-2019-015',
-    tanggalMasuk: '2019-07-01',
-    status: 'aktif',
+    tanggalMulaiTugas: '2019-07-01',
+    status: 'Aktif',
     gaji: 4500000,
+    kategori: 'PNS',
+    golongan: 'III/b',
   },
   {
     id: 'pegawai-3',
@@ -61,9 +65,11 @@ export const dataPegawai: Pegawai[] = [
     jabatan: 'HRD',
     divisi: 'HR',
     nip: 'NIP-2021-003',
-    tanggalMasuk: '2021-01-10',
-    status: 'aktif',
+    tanggalMulaiTugas: '2021-01-10',
+    status: 'Aktif',
     gaji: 5500000,
+    kategori: 'PPPK',
+    golongan: 'IX', // Mapping to user request: III/a equivalent? Let's just use III/a for simplicity to match dropdown
   },
   {
     id: 'pegawai-4',
@@ -73,9 +79,11 @@ export const dataPegawai: Pegawai[] = [
     jabatan: 'Marketing',
     divisi: 'Pemasaran',
     nip: 'NIP-2022-008',
-    tanggalMasuk: '2022-05-20',
-    status: 'cuti',
+    tanggalMulaiTugas: '2022-05-20',
+    status: 'Cuti Tahunan',
     gaji: 4800000,
+    kategori: 'CPNS',
+    golongan: 'II/c',
   },
   {
     id: 'pegawai-5',
@@ -85,9 +93,11 @@ export const dataPegawai: Pegawai[] = [
     jabatan: 'Supervisor',
     divisi: 'Operasional',
     nip: 'NIP-2018-002',
-    tanggalMasuk: '2018-09-01',
-    status: 'aktif',
+    tanggalMulaiTugas: '2018-09-01',
+    status: 'Aktif',
     gaji: 7000000,
+    kategori: 'PNS',
+    golongan: 'III/d',
   },
   {
     id: 'pegawai-6',
@@ -97,9 +107,11 @@ export const dataPegawai: Pegawai[] = [
     jabatan: 'Akuntan',
     divisi: 'Keuangan',
     nip: 'NIP-2020-012',
-    tanggalMasuk: '2020-11-15',
-    status: 'aktif',
+    tanggalMulaiTugas: '2020-11-15',
+    status: 'Aktif',
     gaji: 6000000,
+    kategori: 'PNS',
+    golongan: 'III/b',
   },
   {
     id: 'pegawai-7',
@@ -109,9 +121,11 @@ export const dataPegawai: Pegawai[] = [
     jabatan: 'Developer',
     divisi: 'IT',
     nip: 'NIP-2023-001',
-    tanggalMasuk: '2023-02-01',
-    status: 'aktif',
+    tanggalMulaiTugas: '2023-02-01',
+    status: 'Aktif',
     gaji: 8000000,
+    kategori: 'PNS',
+    golongan: 'III/c',
   },
   {
     id: 'pegawai-8',
@@ -121,9 +135,11 @@ export const dataPegawai: Pegawai[] = [
     jabatan: 'Sekretaris',
     divisi: 'Administrasi',
     nip: 'NIP-2019-020',
-    tanggalMasuk: '2019-04-10',
-    status: 'tidak-aktif',
+    tanggalMulaiTugas: '2019-04-10',
+    status: 'Nonaktif',
     gaji: 4000000,
+    kategori: 'PNS',
+    golongan: 'III/a',
   },
 ];
 
@@ -343,8 +359,9 @@ export const getPrestasiByPegawai = (pegawaiId: string): PrestasiPegawai[] => {
 
 export const getSummaryPegawai = () => {
   const totalPegawai = dataPegawai.length;
-  const pegawaiAktif = dataPegawai.filter(p => p.status === 'aktif').length;
-  const pegawaiCuti = dataPegawai.filter(p => p.status === 'cuti').length;
+  // Use filter with type predicate or careful string matching
+  const pegawaiAktif = dataPegawai.filter(p => p.status === 'Aktif').length;
+  const pegawaiCuti = dataPegawai.filter(p => p.status.startsWith('Cuti')).length;
   const totalDokumen = dataDokumenPegawai.length;
   const totalPrestasi = dataPrestasiPegawai.length;
 

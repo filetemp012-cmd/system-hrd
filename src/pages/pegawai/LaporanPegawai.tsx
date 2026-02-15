@@ -46,8 +46,8 @@ export default function LaporanPegawai() {
   const summary = useMemo(() => {
     return {
       totalPegawai: pegawaiList.length,
-      pegawaiAktif: pegawaiList.filter(p => p.status === 'aktif').length,
-      pegawaiCuti: pegawaiList.filter(p => p.status === 'cuti').length,
+      pegawaiAktif: pegawaiList.filter(p => p.status === 'Aktif').length,
+      pegawaiCuti: pegawaiList.filter(p => p.status.startsWith('Cuti')).length,
     };
   }, [pegawaiList]);
 
@@ -71,7 +71,8 @@ export default function LaporanPegawai() {
         pegawai.jabatan.toLowerCase().includes(searchQuery.toLowerCase());
 
       const matchesDivisi = filterDivisi === 'all' || pegawai.divisi === filterDivisi;
-      const matchesStatus = filterStatus === 'all' || pegawai.status === filterStatus;
+      const matchesStatus = filterStatus === 'all' ||
+        (filterStatus === 'Cuti' ? pegawai.status.startsWith('Cuti') : pegawai.status === filterStatus);
 
       return matchesSearch && matchesDivisi && matchesStatus;
     });
@@ -197,9 +198,10 @@ export default function LaporanPegawai() {
               </SelectTrigger>
               <SelectContent>
                 <SelectItem value="all">Semua Status</SelectItem>
-                <SelectItem value="aktif">Aktif</SelectItem>
-                <SelectItem value="cuti">Cuti</SelectItem>
-                <SelectItem value="tidak-aktif">Tidak Aktif</SelectItem>
+                <SelectItem value="Aktif">Aktif</SelectItem>
+                <SelectItem value="Cuti">Sedang Cuti</SelectItem>
+                <SelectItem value="Nonaktif">Nonaktif</SelectItem>
+                <SelectItem value="Pensiun">Pensiun</SelectItem>
               </SelectContent>
             </Select>
           </div>
@@ -217,7 +219,7 @@ export default function LaporanPegawai() {
                   <TableHead>Nama</TableHead>
                   <TableHead>Jabatan</TableHead>
                   <TableHead>Divisi</TableHead>
-                  <TableHead>Tanggal Masuk</TableHead>
+                  <TableHead>Tanggal Mulai Tugas</TableHead>
                   <TableHead className="text-center">Dokumen</TableHead>
                   <TableHead className="text-center">Prestasi</TableHead>
                   <TableHead>Status</TableHead>
@@ -235,7 +237,7 @@ export default function LaporanPegawai() {
                       <TableCell className="font-medium">{pegawai.nama}</TableCell>
                       <TableCell>{pegawai.jabatan}</TableCell>
                       <TableCell>{pegawai.divisi}</TableCell>
-                      <TableCell>{pegawai.tanggalMasuk}</TableCell>
+                      <TableCell>{pegawai.tanggalMulaiTugas}</TableCell>
                       <TableCell className="text-center">
                         <span className="px-2 py-1 bg-muted rounded text-sm font-medium">
                           {dokumenCount}
@@ -249,13 +251,10 @@ export default function LaporanPegawai() {
                       <TableCell>
                         <StatusBadge
                           status={
-                            pegawai.status === 'aktif' ? 'selesai' :
-                              pegawai.status === 'cuti' ? 'menunggu' : 'terlambat'
+                            pegawai.status === 'Aktif' ? 'selesai' :
+                              ['Nonaktif', 'Pensiun'].includes(pegawai.status) ? 'terlambat' : 'menunggu'
                           }
-                          label={
-                            pegawai.status === 'aktif' ? 'Aktif' :
-                              pegawai.status === 'cuti' ? 'Cuti' : 'Tidak Aktif'
-                          }
+                          label={pegawai.status}
                         />
                       </TableCell>
                     </TableRow>

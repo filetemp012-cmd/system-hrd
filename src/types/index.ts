@@ -44,9 +44,11 @@ export interface Pegawai extends User {
   jabatan: string;
   divisi: string;
   nip: string;
-  tanggalMasuk: string;
-  status: 'aktif' | 'cuti' | 'tidak-aktif';
+  tanggalMulaiTugas: string;
+  status: 'Aktif' | 'Nonaktif' | 'Cuti Tahunan' | 'Cuti Sakit' | 'Cuti Melahirkan' | 'Cuti Alasan Penting' | 'Cuti Besar' | 'Cuti di Luar Tanggungan Negara' | 'Pensiun';
   gaji: number;
+  kategori: 'CPNS' | 'PNS' | 'PPPK' | 'PNS Diperbantukan' | 'Purna Tugas';
+  golongan: string;
 }
 
 export interface DokumenPegawai {

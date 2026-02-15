@@ -47,9 +47,10 @@ export default function KelolaPegawai() {
     nama: '',
     nip: '',
     jabatan: '',
-    divisi: '',
-    tanggalMasuk: '',
-    status: 'aktif',
+    golongan: '',
+    tanggalMulaiTugas: '',
+    status: 'Aktif',
+    kategori: 'PNS',
     gaji: ''
   };
   const [formData, setFormData] = useState(initialFormState);
@@ -100,9 +101,10 @@ export default function KelolaPegawai() {
       nama: pegawai.nama,
       nip: pegawai.nip,
       jabatan: pegawai.jabatan,
-      divisi: pegawai.divisi,
-      tanggalMasuk: pegawai.tanggalMasuk,
-      status: pegawai.status || 'aktif',
+      golongan: pegawai.golongan,
+      tanggalMulaiTugas: pegawai.tanggalMulaiTugas,
+      status: pegawai.status || 'Aktif',
+      kategori: pegawai.kategori || 'PNS',
       gaji: pegawai.gaji ? pegawai.gaji.toString() : ''
     });
     setCurrentId(pegawai.id);
@@ -125,7 +127,7 @@ export default function KelolaPegawai() {
   const handleSavePegawai = (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (!formData.jabatan || !formData.status || !formData.gaji) {
+    if (!formData.jabatan || !formData.status || !formData.gaji || !formData.kategori || !formData.golongan) {
       toast({
         title: "Validasi Gagal",
         description: "Mohon lengkapi semua data wajib (Jabatan, Status, Gaji)",
@@ -142,6 +144,9 @@ export default function KelolaPegawai() {
             ...p,
             ...formData,
             gaji: parseInt(formData.gaji) || 0,
+            status: formData.status as any,
+            kategori: formData.kategori as any,
+            golongan: formData.golongan,
             // Keep other fields that are not in form
           }
           : p
@@ -159,7 +164,10 @@ export default function KelolaPegawai() {
         role: 'pegawai',
         ...formData,
         gaji: parseInt(formData.gaji) || 0,
-        status: formData.status as 'aktif' | 'cuti' | 'tidak-aktif' // Type assertion
+        status: formData.status as any,
+        kategori: formData.kategori as any,
+        golongan: formData.golongan,
+        divisi: '', // Removed from form but required by type
       };
 
       updateLocalStorage([...pegawaiList, newPegawai]);
@@ -482,34 +490,90 @@ export default function KelolaPegawai() {
                         </SelectContent>
                       </Select>
                     </div>
+                    <div className="space-y-2">
+                      <Label htmlFor="golongan">Golongan</Label>
+                      <Select
+                        value={formData.golongan}
+                        onValueChange={(val) => setFormData(prev => ({ ...prev, golongan: val }))}
+                        required
+                      >
+                        <SelectTrigger>
+                          <SelectValue placeholder="Pilih Golongan" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="I/a">I/a</SelectItem>
+                          <SelectItem value="I/b">I/b</SelectItem>
+                          <SelectItem value="I/c">I/c</SelectItem>
+                          <SelectItem value="I/d">I/d</SelectItem>
+                          <SelectItem value="II/a">II/a</SelectItem>
+                          <SelectItem value="II/b">II/b</SelectItem>
+                          <SelectItem value="II/c">II/c</SelectItem>
+                          <SelectItem value="II/d">II/d</SelectItem>
+                          <SelectItem value="III/a">III/a</SelectItem>
+                          <SelectItem value="III/b">III/b</SelectItem>
+                          <SelectItem value="III/c">III/c</SelectItem>
+                          <SelectItem value="III/d">III/d</SelectItem>
+                          <SelectItem value="IV/a">IV/a</SelectItem>
+                          <SelectItem value="IV/b">IV/b</SelectItem>
+                          <SelectItem value="IV/c">IV/c</SelectItem>
+                          <SelectItem value="IV/d">IV/d</SelectItem>
+                          <SelectItem value="IV/e">IV/e</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </div>
 
                     <div className="space-y-2">
-                      <Label htmlFor="tanggalMasuk">Tanggal Masuk</Label>
+                      <Label htmlFor="tanggalMulaiTugas">Tanggal Mulai Tugas</Label>
                       <Input
-                        id="tanggalMasuk"
+                        id="tanggalMulaiTugas"
                         type="date"
-                        value={formData.tanggalMasuk}
+                        value={formData.tanggalMulaiTugas}
                         onChange={handleInputChange}
                         required
                       />
                     </div>
                     <div className="space-y-2">
-                      <Label htmlFor="status">Status</Label>
+                      <Label htmlFor="status">Status Kepegawaian</Label>
                       <Select
                         value={formData.status}
                         onValueChange={(val) => setFormData(prev => ({ ...prev, status: val }))}
                         required
                       >
                         <SelectTrigger>
-                          <SelectValue placeholder="Pilih Status" />
+                          <SelectValue placeholder="Pilih Status Kepegawaian" />
                         </SelectTrigger>
                         <SelectContent>
-                          <SelectItem value="aktif">Aktif</SelectItem>
-                          <SelectItem value="cuti">Cuti</SelectItem>
-                          <SelectItem value="tidak-aktif">Tidak Aktif</SelectItem>
+                          <SelectItem value="Aktif">Aktif</SelectItem>
+                          <SelectItem value="Nonaktif">Nonaktif</SelectItem>
+                          <SelectItem value="Cuti Tahunan">Cuti Tahunan</SelectItem>
+                          <SelectItem value="Cuti Sakit">Cuti Sakit</SelectItem>
+                          <SelectItem value="Cuti Melahirkan">Cuti Melahirkan</SelectItem>
+                          <SelectItem value="Cuti Alasan Penting">Cuti Alasan Penting</SelectItem>
+                          <SelectItem value="Cuti Besar">Cuti Besar</SelectItem>
+                          <SelectItem value="Cuti di Luar Tanggungan Negara">Cuti di Luar Tanggungan Negara</SelectItem>
+                          <SelectItem value="Pensiun">Pensiun</SelectItem>
                         </SelectContent>
                       </Select>
                     </div>
+                  </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="kategori">Kategori Pegawai</Label>
+                    <Select
+                      value={formData.kategori}
+                      onValueChange={(val) => setFormData(prev => ({ ...prev, kategori: val }))}
+                      required
+                    >
+                      <SelectTrigger>
+                        <SelectValue placeholder="Pilih Kategori Pegawai" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="CPNS">CPNS</SelectItem>
+                        <SelectItem value="PNS">PNS</SelectItem>
+                        <SelectItem value="PPPK">PPPK</SelectItem>
+                        <SelectItem value="PNS Diperbantukan">PNS Diperbantukan</SelectItem>
+                        <SelectItem value="Purna Tugas">Purna Tugas</SelectItem>
+                      </SelectContent>
+                    </Select>
                   </div>
                   <div className="flex justify-end gap-2 pt-4">
                     <Button type="button" variant="outline" onClick={() => setIsAddPegawaiOpen(false)}>
@@ -545,13 +609,10 @@ export default function KelolaPegawai() {
                     <TableCell>
                       <StatusBadge
                         status={
-                          pegawai.status === 'aktif' ? 'selesai' :
-                            pegawai.status === 'cuti' ? 'menunggu' : 'terlambat'
+                          pegawai.status === 'Aktif' ? 'selesai' :
+                            ['Nonaktif', 'Pensiun'].includes(pegawai.status) ? 'terlambat' : 'menunggu'
                         }
-                        label={
-                          pegawai.status === 'aktif' ? 'Aktif' :
-                            pegawai.status === 'cuti' ? 'Cuti' : 'Tidak Aktif'
-                        }
+                        label={pegawai.status}
                       />
                     </TableCell>
                     <TableCell>
