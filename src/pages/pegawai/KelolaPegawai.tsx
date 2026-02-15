@@ -49,6 +49,7 @@ export default function KelolaPegawai() {
     jabatan: '',
     golongan: '',
     tanggalMulaiTugas: '',
+    tanggalPurnaTugas: '',
     status: 'Aktif',
     kategori: 'PNS',
     gaji: ''
@@ -103,6 +104,7 @@ export default function KelolaPegawai() {
       jabatan: pegawai.jabatan,
       golongan: pegawai.golongan,
       tanggalMulaiTugas: pegawai.tanggalMulaiTugas,
+      tanggalPurnaTugas: pegawai.tanggalPurnaTugas || '',
       status: pegawai.status || 'Aktif',
       kategori: pegawai.kategori || 'PNS',
       gaji: pegawai.gaji ? pegawai.gaji.toString() : ''
@@ -533,6 +535,15 @@ export default function KelolaPegawai() {
                       />
                     </div>
                     <div className="space-y-2">
+                      <Label htmlFor="tanggalPurnaTugas">Tanggal Purna Tugas (Opsional)</Label>
+                      <Input
+                        id="tanggalPurnaTugas"
+                        type="date"
+                        value={formData.tanggalPurnaTugas}
+                        onChange={handleInputChange}
+                      />
+                    </div>
+                    <div className="space-y-2">
                       <Label htmlFor="status">Status Kepegawaian</Label>
                       <Select
                         value={formData.status}
@@ -913,6 +924,6 @@ export default function KelolaPegawai() {
           </div>
         </TabsContent>
       </Tabs>
-    </DashboardLayout>
+    </DashboardLayout >
   );
 }
