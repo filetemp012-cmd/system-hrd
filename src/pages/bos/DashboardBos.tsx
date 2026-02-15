@@ -56,14 +56,14 @@ export default function DashboardBos() {
   }, [pegawaiList, dokumenList, prestasiList]);
 
   const [searchQuery, setSearchQuery] = useState('');
-  const [filterDivisi, setFilterDivisi] = useState<string>('all');
+  const [filterJabatan, setFilterJabatan] = useState<string>('all');
   const [filterStatus, setFilterStatus] = useState<string>('all');
 
-  // Fixed division list
-  const ALL_DIVISI = ['Administrasi', 'Keuangan', 'HR', 'Operasional', 'Pemasaran', 'IT', 'Riset & Pengembangan', 'Humas', 'Hukum'];
+  // Fixed jabatan list
+  const ALL_JABATAN = ['Struktural', 'Fungsional', 'Pelaksana', 'Pendidik', 'Tenaga Kependidikan'];
 
   // Use fixed list for filtering
-  const divisiList = ALL_DIVISI;
+  const jabatanList = ALL_JABATAN;
 
   // Group pegawai by divisi
   const pegawaiByDivisi = useMemo(() => {
@@ -84,13 +84,13 @@ export default function DashboardBos() {
         pegawai.nip.toLowerCase().includes(searchQuery.toLowerCase()) ||
         pegawai.jabatan.toLowerCase().includes(searchQuery.toLowerCase());
 
-      const matchesDivisi = filterDivisi === 'all' || pegawai.divisi === filterDivisi;
+      const matchesJabatan = filterJabatan === 'all' || pegawai.jabatan === filterJabatan;
       const matchesStatus = filterStatus === 'all' ||
         (filterStatus === 'Cuti' ? pegawai.status.startsWith('Cuti') : pegawai.status === filterStatus);
 
-      return matchesSearch && matchesDivisi && matchesStatus;
+      return matchesSearch && matchesJabatan && matchesStatus;
     });
-  }, [searchQuery, filterDivisi, filterStatus, pegawaiList]);
+  }, [searchQuery, filterJabatan, filterStatus, pegawaiList]);
 
   // Filtered documents based on filtered pegawai
   const filteredDokumen = useMemo(() => {
@@ -116,7 +116,7 @@ export default function DashboardBos() {
       />
 
       {/* Summary Cards */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4 mb-8">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-4 mb-8">
         <StatCard
           title="Total Pegawai"
           value={summary.totalPegawai}
@@ -131,45 +131,24 @@ export default function DashboardBos() {
           iconColor="text-green-600"
           iconBgColor="bg-green-100 dark:bg-green-900/30"
         />
-        <StatCard
-          title="Pegawai Cuti"
-          value={summary.pegawaiCuti}
-          icon={UserX}
-          iconColor="text-yellow-600"
-          iconBgColor="bg-yellow-100 dark:bg-yellow-900/30"
-        />
-        <StatCard
-          title="Total Dokumen"
-          value={summary.totalDokumen}
-          icon={FileText}
-          iconColor="text-blue-600"
-          iconBgColor="bg-blue-100 dark:bg-blue-900/30"
-        />
-        <StatCard
-          title="Total Prestasi"
-          value={summary.totalPrestasi}
-          icon={Award}
-          iconColor="text-purple-600"
-          iconBgColor="bg-purple-100 dark:bg-purple-900/30"
-        />
       </div>
 
-      {/* Pegawai by Divisi */}
+      {/* Pegawai by Jabatan */}
       <Card className="mb-8">
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
             <Building2 className="h-5 w-5" />
-            Pegawai per Divisi
+            Pegawai per Jabatan
           </CardTitle>
         </CardHeader>
         <CardContent>
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
-            {ALL_DIVISI.map((divisi) => {
-              const count = pegawaiList.filter(p => p.divisi === divisi).length;
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
+            {ALL_JABATAN.map((jabatan) => {
+              const count = pegawaiList.filter(p => p.jabatan === jabatan).length;
               return (
-                <div key={divisi} className="p-4 rounded-lg bg-muted/50 text-center">
+                <div key={jabatan} className="p-4 rounded-lg bg-muted/50 text-center">
                   <p className="text-2xl font-bold text-primary">{count}</p>
-                  <p className="text-sm text-muted-foreground truncate" title={divisi}>{divisi}</p>
+                  <p className="text-sm text-muted-foreground truncate" title={jabatan}>{jabatan}</p>
                 </div>
               );
             })}
@@ -193,14 +172,14 @@ export default function DashboardBos() {
                 className="pl-9"
               />
             </div>
-            <Select value={filterDivisi} onValueChange={setFilterDivisi}>
+            <Select value={filterJabatan} onValueChange={setFilterJabatan}>
               <SelectTrigger className="w-full sm:w-[200px]">
-                <SelectValue placeholder="Semua Divisi" />
+                <SelectValue placeholder="Semua Jabatan" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="all">Semua Divisi</SelectItem>
-                {divisiList.map(divisi => (
-                  <SelectItem key={divisi} value={divisi}>{divisi}</SelectItem>
+                <SelectItem value="all">Semua Jabatan</SelectItem>
+                {jabatanList.map(jabatan => (
+                  <SelectItem key={jabatan} value={jabatan}>{jabatan}</SelectItem>
                 ))}
               </SelectContent>
             </Select>
@@ -252,7 +231,6 @@ export default function DashboardBos() {
                       <TableHead>NIP</TableHead>
                       <TableHead>Nama</TableHead>
                       <TableHead>Jabatan</TableHead>
-                      <TableHead>Divisi</TableHead>
                       <TableHead>Tanggal Mulai Tugas</TableHead>
                       <TableHead className="text-center">Dokumen</TableHead>
                       <TableHead className="text-center">Prestasi</TableHead>
@@ -270,7 +248,6 @@ export default function DashboardBos() {
                           <TableCell className="font-mono text-sm">{pegawai.nip}</TableCell>
                           <TableCell className="font-medium">{pegawai.nama}</TableCell>
                           <TableCell>{pegawai.jabatan}</TableCell>
-                          <TableCell>{pegawai.divisi}</TableCell>
                           <TableCell>{pegawai.tanggalMulaiTugas}</TableCell>
                           <TableCell className="text-center">
                             <span className="px-2 py-1 bg-muted rounded text-sm font-medium">
@@ -296,7 +273,7 @@ export default function DashboardBos() {
                     })}
                     {filteredPegawai.length === 0 && (
                       <TableRow>
-                        <TableCell colSpan={9} className="text-center py-8 text-muted-foreground">
+                        <TableCell colSpan={8} className="text-center py-8 text-muted-foreground">
                           Tidak ada data pegawai yang sesuai filter
                         </TableCell>
                       </TableRow>

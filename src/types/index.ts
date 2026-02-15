@@ -55,7 +55,8 @@ export interface Pegawai extends User {
 export interface DokumenPegawai {
   id: string;
   pegawaiId: string;
-  jenisDokumen: 'KTP' | 'NPWP' | 'Ijazah' | 'Sertifikat' | 'Kontrak' | 'Lainnya';
+  jenisDokumen: string;
+  kategori?: 'pribadi' | 'pendidikan' | 'kepegawaian_pns' | 'kesejahteraan' | 'administrasi';
   namaFile: string;
   fileUrl: string;
   uploadedAt: string;

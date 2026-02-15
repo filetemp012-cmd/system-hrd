@@ -3,14 +3,13 @@ import { PageHeader } from '@/components/atoms/PageHeader';
 import { StatCard } from '@/components/atoms/StatCard';
 import { MenuCard } from '@/components/molecules/MenuCard';
 import { useState, useEffect } from 'react';
-import { dataPegawai, dataDokumenPegawai, dataPrestasiPegawai } from '@/data/dummyData';
-import { Pegawai, DokumenPegawai, PrestasiPegawai } from '@/types';
+import { dataPegawai, dataDokumenPegawai } from '@/data/dummyData';
+import { Pegawai, DokumenPegawai } from '@/types';
 import {
   Users,
   UserCheck,
   UserX,
   FileText,
-  Award,
   BarChart3
 } from 'lucide-react';
 
@@ -19,8 +18,7 @@ export default function DashboardKepegawaian() {
     totalPegawai: 0,
     pegawaiAktif: 0,
     pegawaiCuti: 0,
-    totalDokumen: 0,
-    totalPrestasi: 0
+    totalDokumen: 0
   });
 
   useEffect(() => {
@@ -36,14 +34,13 @@ export default function DashboardKepegawaian() {
 
     const pegawaiList = getLocalData<Pegawai[]>('pegawaiData', dataPegawai);
     const dokumenList = getLocalData<DokumenPegawai[]>('dokumenData', dataDokumenPegawai);
-    const prestasiList = getLocalData<PrestasiPegawai[]>('prestasiData', dataPrestasiPegawai);
+
 
     setSummary({
       totalPegawai: pegawaiList.length,
-      pegawaiAktif: pegawaiList.filter(p => p.status === 'aktif').length,
-      pegawaiCuti: pegawaiList.filter(p => p.status === 'cuti').length,
-      totalDokumen: dokumenList.length,
-      totalPrestasi: prestasiList.length
+      pegawaiAktif: pegawaiList.filter(p => p.status === 'Aktif').length,
+      pegawaiCuti: pegawaiList.filter(p => p.status.startsWith('Cuti')).length,
+      totalDokumen: dokumenList.length
     });
   }, []);
 
@@ -55,7 +52,7 @@ export default function DashboardKepegawaian() {
       />
 
       {/* Summary Stats */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4 mb-8">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
         <StatCard
           title="Total Pegawai"
           value={summary.totalPegawai}
@@ -80,12 +77,6 @@ export default function DashboardKepegawaian() {
           icon={FileText}
           description="Dokumen tersimpan"
         />
-        <StatCard
-          title="Total Prestasi"
-          value={summary.totalPrestasi}
-          icon={Award}
-          description="Prestasi tercatat"
-        />
       </div>
 
       {/* Quick Stats */}
@@ -108,7 +99,7 @@ export default function DashboardKepegawaian() {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <MenuCard
           title="Kelola Pegawai"
-          description="Input data, dokumen, dan prestasi pegawai."
+          description="Input data, dan dokumen pegawai."
           icon={Users}
           to="/pegawai/kelola"
           color="primary"

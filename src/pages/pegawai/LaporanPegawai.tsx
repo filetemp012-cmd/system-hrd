@@ -19,15 +19,15 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
-import { dataPegawai, dataDokumenPegawai, dataPrestasiPegawai } from '@/data/dummyData';
-import { Pegawai, DokumenPegawai, PrestasiPegawai } from '@/types';
+import { dataPegawai, dataDokumenPegawai } from '@/data/dummyData';
+import { Pegawai, DokumenPegawai } from '@/types';
 import { Users, UserCheck, UserX, Building2, Search } from 'lucide-react';
 
 export default function LaporanPegawai() {
   // State for data
   const [pegawaiList, setPegawaiList] = useState<Pegawai[]>([]);
   const [dokumenList, setDokumenList] = useState<DokumenPegawai[]>([]);
-  const [prestasiList, setPrestasiList] = useState<PrestasiPegawai[]>([]);
+
 
   // Load data from localStorage on mount
   useEffect(() => {
@@ -39,7 +39,6 @@ export default function LaporanPegawai() {
 
     setPegawaiList(getLocalData<Pegawai[]>('pegawaiData', dataPegawai));
     setDokumenList(getLocalData<DokumenPegawai[]>('dokumenData', dataDokumenPegawai));
-    setPrestasiList(getLocalData<PrestasiPegawai[]>('prestasiData', dataPrestasiPegawai));
   }, []);
 
   // Calculate Summary
@@ -52,16 +51,20 @@ export default function LaporanPegawai() {
   }, [pegawaiList]);
 
   const [searchQuery, setSearchQuery] = useState('');
-  const [filterDivisi, setFilterDivisi] = useState<string>('all');
+  const [filterJabatan, setFilterJabatan] = useState<string>('all');
   const [filterStatus, setFilterStatus] = useState<string>('all');
+  const [filterKategori, setFilterKategori] = useState<string>('all');
+  const [filterGolongan, setFilterGolongan] = useState<string>('all');
 
-  // Fixed division list
-  const ALL_DIVISI = ['Administrasi', 'Keuangan', 'HR', 'Operasional', 'Pemasaran', 'IT', 'Riset & Pengembangan', 'Humas', 'Hukum'];
+  // Filter Options from KelolaPegawai
+  const JABATAN_OPTIONS = ['Struktural', 'Fungsional', 'Pelaksana', 'Pendidik', 'Tenaga Kependidikan'];
+  const GOLONGAN_OPTIONS = ['I/a', 'I/b', 'I/c', 'I/d', 'II/a', 'II/b', 'II/c', 'II/d', 'III/a', 'III/b', 'III/c', 'III/d', 'IV/a', 'IV/b', 'IV/c', 'IV/d', 'IV/e'];
+  const STATUS_OPTIONS = ['Aktif', 'Nonaktif', 'Cuti Tahunan', 'Cuti Sakit', 'Cuti Melahirkan', 'Cuti Alasan Penting', 'Cuti Besar', 'Cuti di Luar Tanggungan Negara', 'Pensiun'];
+  const KATEGORI_OPTIONS = ['CPNS', 'PNS', 'PPPK', 'PNS Diperbantukan', 'Purna Tugas'];
 
-  // Use fixed list for filtering
-  const divisiList = ALL_DIVISI;
+  // Fixed jabatan list
+  const ALL_JABATAN = ['Struktural', 'Fungsional', 'Pelaksana', 'Pendidik', 'Tenaga Kependidikan'];
 
-  // Filtered pegawai
   // Filtered pegawai
   const filteredPegawai = useMemo(() => {
     return pegawaiList.filter(pegawai => {
@@ -70,13 +73,14 @@ export default function LaporanPegawai() {
         pegawai.nip.toLowerCase().includes(searchQuery.toLowerCase()) ||
         pegawai.jabatan.toLowerCase().includes(searchQuery.toLowerCase());
 
-      const matchesDivisi = filterDivisi === 'all' || pegawai.divisi === filterDivisi;
-      const matchesStatus = filterStatus === 'all' ||
-        (filterStatus === 'Cuti' ? pegawai.status.startsWith('Cuti') : pegawai.status === filterStatus);
+      const matchesJabatan = filterJabatan === 'all' || pegawai.jabatan === filterJabatan;
+      const matchesStatus = filterStatus === 'all' || pegawai.status === filterStatus;
+      const matchesKategori = filterKategori === 'all' || pegawai.kategori === filterKategori;
+      const matchesGolongan = filterGolongan === 'all' || pegawai.golongan === filterGolongan;
 
-      return matchesSearch && matchesDivisi && matchesStatus;
+      return matchesSearch && matchesJabatan && matchesStatus && matchesKategori && matchesGolongan;
     });
-  }, [searchQuery, filterDivisi, filterStatus, pegawaiList]);
+  }, [searchQuery, filterJabatan, filterStatus, filterKategori, filterGolongan, pegawaiList]);
 
   return (
     <DashboardLayout>
@@ -86,7 +90,7 @@ export default function LaporanPegawai() {
       />
 
       {/* Summary Cards */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-4 mb-8">
         <Card>
           <CardContent className="pt-6">
             <div className="flex items-center gap-4">
@@ -113,50 +117,24 @@ export default function LaporanPegawai() {
             </div>
           </CardContent>
         </Card>
-        <Card>
-          <CardContent className="pt-6">
-            <div className="flex items-center gap-4">
-              <div className="p-3 rounded-full bg-yellow-100 dark:bg-yellow-900/30">
-                <UserX className="h-6 w-6 text-yellow-600" />
-              </div>
-              <div>
-                <p className="text-sm text-muted-foreground">Pegawai Cuti</p>
-                <p className="text-2xl font-bold">{summary.pegawaiCuti}</p>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-        <Card>
-          <CardContent className="pt-6">
-            <div className="flex items-center gap-4">
-              <div className="p-3 rounded-full bg-blue-100 dark:bg-blue-900/30">
-                <Building2 className="h-6 w-6 text-blue-600" />
-              </div>
-              <div>
-                <p className="text-sm text-muted-foreground">Total Divisi</p>
-                <p className="text-2xl font-bold">{ALL_DIVISI.length}</p>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
       </div>
 
-      {/* Pegawai by Divisi */}
+      {/* Pegawai by Jabatan */}
       <Card className="mb-8">
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
             <Building2 className="h-5 w-5" />
-            Pegawai per Divisi
+            Pegawai per Jabatan
           </CardTitle>
         </CardHeader>
         <CardContent>
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
-            {ALL_DIVISI.map((divisi) => {
-              const count = pegawaiList.filter(p => p.divisi === divisi).length;
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
+            {ALL_JABATAN.map((jabatan) => {
+              const count = pegawaiList.filter(p => p.jabatan === jabatan).length;
               return (
-                <div key={divisi} className="p-4 rounded-lg bg-muted/50 text-center">
+                <div key={jabatan} className="p-4 rounded-lg bg-muted/50 text-center">
                   <p className="text-2xl font-bold text-primary">{count}</p>
-                  <p className="text-sm text-muted-foreground truncate" title={divisi}>{divisi}</p>
+                  <p className="text-sm text-muted-foreground truncate" title={jabatan}>{jabatan}</p>
                 </div>
               );
             })}
@@ -171,7 +149,7 @@ export default function LaporanPegawai() {
         </CardHeader>
         <CardContent>
           {/* Search and Filters */}
-          <div className="flex flex-col sm:flex-row gap-4 mb-6">
+          <div className="flex flex-col gap-4 mb-6">
             <div className="relative flex-1">
               <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
               <Input
@@ -181,29 +159,56 @@ export default function LaporanPegawai() {
                 className="pl-9"
               />
             </div>
-            <Select value={filterDivisi} onValueChange={setFilterDivisi}>
-              <SelectTrigger className="w-full sm:w-[200px]">
-                <SelectValue placeholder="Semua Divisi" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="all">Semua Divisi</SelectItem>
-                {divisiList.map(divisi => (
-                  <SelectItem key={divisi} value={divisi}>{divisi}</SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-            <Select value={filterStatus} onValueChange={setFilterStatus}>
-              <SelectTrigger className="w-full sm:w-[160px]">
-                <SelectValue placeholder="Semua Status" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="all">Semua Status</SelectItem>
-                <SelectItem value="Aktif">Aktif</SelectItem>
-                <SelectItem value="Cuti">Sedang Cuti</SelectItem>
-                <SelectItem value="Nonaktif">Nonaktif</SelectItem>
-                <SelectItem value="Pensiun">Pensiun</SelectItem>
-              </SelectContent>
-            </Select>
+            {/* Filters Row 1 */}
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 w-full">
+              <Select value={filterJabatan} onValueChange={setFilterJabatan}>
+                <SelectTrigger>
+                  <SelectValue placeholder="Semua Jabatan" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="all">Semua Jabatan</SelectItem>
+                  {JABATAN_OPTIONS.map(opt => (
+                    <SelectItem key={opt} value={opt}>{opt}</SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+
+              <Select value={filterStatus} onValueChange={setFilterStatus}>
+                <SelectTrigger>
+                  <SelectValue placeholder="Semua Status" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="all">Semua Status</SelectItem>
+                  {STATUS_OPTIONS.map(opt => (
+                    <SelectItem key={opt} value={opt}>{opt}</SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+
+              <Select value={filterKategori} onValueChange={setFilterKategori}>
+                <SelectTrigger>
+                  <SelectValue placeholder="Semua Kategori" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="all">Semua Kategori</SelectItem>
+                  {KATEGORI_OPTIONS.map(opt => (
+                    <SelectItem key={opt} value={opt}>{opt}</SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+
+              <Select value={filterGolongan} onValueChange={setFilterGolongan}>
+                <SelectTrigger>
+                  <SelectValue placeholder="Semua Golongan" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="all">Semua Golongan</SelectItem>
+                  {GOLONGAN_OPTIONS.map(opt => (
+                    <SelectItem key={opt} value={opt}>{opt}</SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
           </div>
 
           <div className="text-sm text-muted-foreground mb-4">
@@ -218,17 +223,15 @@ export default function LaporanPegawai() {
                   <TableHead>NIP</TableHead>
                   <TableHead>Nama</TableHead>
                   <TableHead>Jabatan</TableHead>
-                  <TableHead>Divisi</TableHead>
                   <TableHead>Tanggal Mulai Tugas</TableHead>
                   <TableHead className="text-center">Dokumen</TableHead>
-                  <TableHead className="text-center">Prestasi</TableHead>
+
                   <TableHead>Status</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
                 {filteredPegawai.map((pegawai, index) => {
                   const dokumenCount = dokumenList.filter(d => d.pegawaiId === pegawai.id).length;
-                  const prestasiCount = prestasiList.filter(p => p.pegawaiId === pegawai.id).length;
 
                   return (
                     <TableRow key={pegawai.id}>
@@ -236,18 +239,13 @@ export default function LaporanPegawai() {
                       <TableCell className="font-mono text-sm">{pegawai.nip}</TableCell>
                       <TableCell className="font-medium">{pegawai.nama}</TableCell>
                       <TableCell>{pegawai.jabatan}</TableCell>
-                      <TableCell>{pegawai.divisi}</TableCell>
                       <TableCell>{pegawai.tanggalMulaiTugas}</TableCell>
                       <TableCell className="text-center">
                         <span className="px-2 py-1 bg-muted rounded text-sm font-medium">
                           {dokumenCount}
                         </span>
                       </TableCell>
-                      <TableCell className="text-center">
-                        <span className="px-2 py-1 bg-muted rounded text-sm font-medium">
-                          {prestasiCount}
-                        </span>
-                      </TableCell>
+
                       <TableCell>
                         <StatusBadge
                           status={
@@ -262,7 +260,7 @@ export default function LaporanPegawai() {
                 })}
                 {filteredPegawai.length === 0 && (
                   <TableRow>
-                    <TableCell colSpan={9} className="text-center py-8 text-muted-foreground">
+                    <TableCell colSpan={7} className="text-center py-8 text-muted-foreground">
                       Tidak ada data pegawai yang sesuai filter
                     </TableCell>
                   </TableRow>
