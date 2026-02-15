@@ -16,7 +16,7 @@ export function DashboardLayout({ children, role = 'pegawai' }: DashboardLayoutP
         <SidebarInset className="flex-1">
           <div className="flex items-center gap-2 px-4 py-2 md:hidden border-b border-border bg-card">
             <SidebarTrigger />
-            <span className="font-semibold text-foreground">System Administrasi</span>
+            <span className="font-semibold text-foreground">Media Pembelajaran Sistem Administrasi Pegawai</span>
           </div>
           <AppHeader />
           <main className="flex-1 p-4 md:p-6 lg:p-8 animate-fade-in">

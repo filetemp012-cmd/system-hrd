@@ -13,7 +13,7 @@ export function AuthLayout({ children }: AuthLayoutProps) {
           <div className="w-20 h-20 mx-auto mb-4">
             <img src="/logo.jpg" alt="Logo" className="w-full h-full object-contain rounded-2xl" />
           </div>
-          <h1 className="text-2xl font-bold text-foreground">System Administrasi Pegawai</h1>
+          <h1 className="text-2xl font-bold text-foreground">Media Pembelajaran Sistem Administrasi Pegawai</h1>
         </div>
         <div className="bg-card rounded-2xl shadow-soft border border-border/50 p-6 md:p-8 animate-fade-in">
           {children}

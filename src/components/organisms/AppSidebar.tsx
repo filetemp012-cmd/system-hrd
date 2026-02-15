@@ -44,8 +44,8 @@ export function AppSidebar({ role = 'pegawai' }: AppSidebarProps) {
             <img src="/logo.jpg" alt="Logo" className="w-full h-full object-cover" />
           </div>
           <div className="overflow-hidden">
-            <h1 className="font-bold text-sidebar-foreground text-sm leading-tight text-wrap">System Administrasi</h1>
-            <p className="text-xs text-sidebar-foreground/70">Pegawai</p>
+            <h1 className="font-bold text-sidebar-foreground text-sm leading-tight text-wrap">Media Pembelajaran</h1>
+            <p className="text-xs text-sidebar-foreground/70">Sistem Administrasi Pegawai</p>
           </div>
         </div>
       </SidebarHeader>
@@ -99,7 +99,7 @@ export function AppSidebar({ role = 'pegawai' }: AppSidebarProps) {
         </div>
 
         <p className="text-[10px] text-sidebar-foreground/40 text-center pt-2 border-t border-sidebar-border/50">
-          © 2026 System Administrasi Pegawai v1.0
+          © 2026 Media Pembelajaran Sistem Administrasi Pegawai v1.0
         </p>
       </SidebarFooter>
     </Sidebar >
