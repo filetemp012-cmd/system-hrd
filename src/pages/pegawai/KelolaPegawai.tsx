@@ -535,7 +535,7 @@ export default function KelolaPegawai() {
                       />
                     </div>
                     <div className="space-y-2">
-                      <Label htmlFor="tanggalPurnaTugas">Tanggal Purna Tugas (Opsional)</Label>
+                      <Label htmlFor="tanggalPurnaTugas">Tanggal Purna Tugas</Label>
                       <Input
                         id="tanggalPurnaTugas"
                         type="date"
@@ -566,25 +566,25 @@ export default function KelolaPegawai() {
                         </SelectContent>
                       </Select>
                     </div>
-                  </div>
-                  <div className="space-y-2">
-                    <Label htmlFor="kategori">Kategori Pegawai</Label>
-                    <Select
-                      value={formData.kategori}
-                      onValueChange={(val) => setFormData(prev => ({ ...prev, kategori: val }))}
-                      required
-                    >
-                      <SelectTrigger>
-                        <SelectValue placeholder="Pilih Kategori Pegawai" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="CPNS">CPNS</SelectItem>
-                        <SelectItem value="PNS">PNS</SelectItem>
-                        <SelectItem value="PPPK">PPPK</SelectItem>
-                        <SelectItem value="PNS Diperbantukan">PNS Diperbantukan</SelectItem>
-                        <SelectItem value="Purna Tugas">Purna Tugas</SelectItem>
-                      </SelectContent>
-                    </Select>
+                    <div className="space-y-2">
+                      <Label htmlFor="kategori">Kategori Pegawai</Label>
+                      <Select
+                        value={formData.kategori}
+                        onValueChange={(val) => setFormData(prev => ({ ...prev, kategori: val }))}
+                        required
+                      >
+                        <SelectTrigger>
+                          <SelectValue placeholder="Pilih Kategori Pegawai" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="CPNS">CPNS</SelectItem>
+                          <SelectItem value="PNS">PNS</SelectItem>
+                          <SelectItem value="PPPK">PPPK</SelectItem>
+                          <SelectItem value="PNS Diperbantukan">PNS Diperbantukan</SelectItem>
+                          <SelectItem value="Purna Tugas">Purna Tugas</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </div>
                   </div>
                   <div className="flex justify-end gap-2 pt-4">
                     <Button type="button" variant="outline" onClick={() => setIsAddPegawaiOpen(false)}>
